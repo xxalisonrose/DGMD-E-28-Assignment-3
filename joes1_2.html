@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Joe's Hotdogs</title>
+    <style>
+        p {
+            color: blue;
+        }
+      </style>
+ 
+  </head>
+
+  <body>
+    <main>
+        <h1>Joe's Hotdogs</h1>  
+        <p>Yum!</p>
+
+        <h2>Part 1</h2>
+
+        <h3>Associative Array</h3>
+        <ul id="partOne"></ul>
+
+
+
+
+
+      <!--JS Starts-->  
+        <script>
+            console.log("JS Test");
+        
+        // Part 1
+        var items = {
+          "hotdogs": 4,
+          "fries": 3.50,
+          "soda": 1.50,
+          "sauerkraut": 1
+        };
+    
+        var partOneElement = document.getElementById("partOne");
+        
+        for (var key in items) {
+          console.log(key + " - $" + items[key]); // Log each item and its price
+          var listItem = document.createElement("li");
+          listItem.textContent = key + " - $" + items[key];
+          partOneElement.appendChild(listItem);
+        }
+
+        // Part 2
+
+
+
+        </script>   
+    </main>
+  </body>
+</html>
