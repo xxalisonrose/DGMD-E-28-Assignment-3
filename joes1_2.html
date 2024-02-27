@@ -4,7 +4,7 @@
     <title>Joe's Hotdogs</title>
     <style>
         p {
-            color: blue;
+            color: black;
         }
       </style>
  
@@ -13,22 +13,31 @@
   <body>
     <main>
         <h1>Joe's Hotdogs</h1>  
-        <p>Yum!</p>
-
-        <h2>Part 1</h2>
+        <h2>Part 1 and 2</h2>
 
         <h3>Associative Array</h3>
         <ul id="partOne"></ul>
 
+        <h3>JSON Object</h3>
+        <p id="objOne"></p>
+        <p id="objTwo"></p>
+        <p id="objThree"></p>
+        <p id="objFour"></p>
 
-
-
+        <h3>Function Object</h3>
+        <table id="funObj">
+          <tr>
+            <th>Item</th>
+            <th>Price</th>
+          </tr>
+        </table>
 
       <!--JS Starts-->  
         <script>
             console.log("JS Test");
         
-        // Part 1
+        // Part 1.1
+        // associative array
         var items = {
           "hotdogs": 4,
           "fries": 3.50,
@@ -36,18 +45,62 @@
           "sauerkraut": 1
         };
     
+        // id for array
         var partOneElement = document.getElementById("partOne");
         
         for (var key in items) {
-          console.log(key + " - $" + items[key]); // Log each item and its price
+          // Log each item and its price to console
+          console.log(key + " - $" + items[key]); 
+          // print to html
           var listItem = document.createElement("li");
           listItem.textContent = key + " - $" + items[key];
           partOneElement.appendChild(listItem);
         }
 
-        // Part 2
+        // Part 1.2
+        // JSON object 
+        let text = '{"item2" : [' +
+             '{"food":"hotdog", "price":"$4"},' +
+             '{"food":"fries", "price":"$3.50"},' +
+             '{"food":"soda", "price":"$1.50"},' +
+             '{"food":"sauerkraut", "price":"$1"}]}';
 
+        const obj = JSON.parse(text);
 
+        // objects 0 - 3 and log to html
+
+        document.getElementById("objOne").innerHTML =
+        obj.item2[0].food + " " + obj.item2[0].price;
+
+        document.getElementById("objTwo").innerHTML =
+        obj.item2[1].food + " " + obj.item2[1].price;
+
+        document.getElementById("objThree").innerHTML =
+        obj.item2[2].food + " " + obj.item2[2].price;
+
+        document.getElementById("objFour").innerHTML =
+        obj.item2[3].food + " " + obj.item2[3].price;
+
+        // Part 1.3
+        // function object with this
+        function MenuItem(name, price) {
+        this.name = name;
+        this.price = price;
+      }
+
+      var hotdogs = new MenuItem("hotdogs", 4);
+      var fries = new MenuItem("fries", 3.50);
+      var soda = new MenuItem("soda", 1.50);
+      var sauerkraut = new MenuItem("sauerkraut", 1);
+
+      var menuItems = [hotdogs, fries, soda, sauerkraut];
+
+      // write to table
+      var tableContent = "";
+      for (var i = 0; i < menuItems.length; i++) {
+        tableContent += "<tr><td>" + menuItems[i].name + "</td><td>$" + menuItems[i].price + "</td></tr>";
+      }
+      document.getElementById("funObj").innerHTML += tableContent;
 
         </script>   
     </main>
