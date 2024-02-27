@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Joe's Hotdogs</title>
+    <style>
+
+      main {
+        margin: 50px;
+      }
+
+      h1 {
+        margin-left: 10px;
+        margin-bottom: 5px;
+      }
+
+      h2 {
+        margin-left: 10px;
+        margin-bottom: 1px;
+      }
+
+
+        p {
+            color: black;
+        }
+
+        table {
+          border: 7px solid #000000;
+          font-size: 25px;
+          text-align: left;
+          padding: 5px;
+        }
+        table th {
+          padding: 5px 10px;
+        }
+
+        table td {
+          padding-left: 5px;
+        }
+
+
+      </style>
+ 
+  </head>
+
+  <body>
+    <main>
+        <h1>Joe's Hotdogs</h1> 
+        
+        <h2>Menu</h2>
+      
+        <table id="funObj">
+          <tr>
+            <th>Item</th>
+            <th>Price</th>
+          </tr>
+        </table>
+
+        <!--Part 3.1: Text input and Add to Cart Button-->
+        <input type="text" id="txtItem" placeholder="Enter Item Name">
+
+        <button onclick="addCartBtn()">Add to Cart</button>
+
+        <!--Part 3.2: Shopping Cart-->
+
+        <div id="shoppingCart"></div>
+
+        <!--Part 3.3: Checkout button-->
+        <button onclick="checkoutBtn()">Checkout</button>
+
+
+      <!--JS Starts-->  
+        <script>
+            console.log("JS Test");
+
+        // Initialize associative array for the cart
+          var cart = {
+            hotdog: 0,
+            fries: 0,
+            soda: 0,
+            sauerkraut: 0
+           };
+
+        // Add items to cart and make it uniform so all text is lower case
+        function addCartBtn() {
+       var lowerName = document.getElementById("txtItem").value.toLowerCase();
+
+          var itemName
+
+    // Check if it is an item that can be ordered
+    if (cart.hasOwnProperty(itemName)) {
+        // add to cart
+        cart[itemName]++;
+        //update total
+        totalCart();
+    } else {
+        alert("Invalid Entry. Try Again.");
+    }
+}
+
+function totalCart() {
+    var shoppingCart = document.getElementById("shoppingCart");
+
+    // Loop through the cart items
+    var cartContent = "";
+    for (var item in cart) {
+        if (cart[item] > 0) {
+            // Display item name and quantity
+            cartContent += "<p>" + item + ": " + cart[item] + "</p>";
+        }
+    }
+
+    // Update the content of the shopping cart
+    shoppingCart.innerHTML = cartContent;
+}
+      
+          function checkoutBtn() {
+            //checkout
+          }
+
+
+
+
+        
+
+        // Part 1.3
+        // function object with this
+        function MenuItem(name, price) {
+        this.name = name;
+        this.price = price;
+      }
+
+      var hotdog = new MenuItem("Hot Dog", 4);
+      var fries = new MenuItem("Fries", 3.50);
+      var soda = new MenuItem("Soda", 1.50);
+      var sauerkraut = new MenuItem("Sauerkraut", 1);
+
+      var menuItems = [hotdog, fries, soda, sauerkraut];
+
+      // write to table
+      var tableContent = "";
+      for (var i = 0; i < menuItems.length; i++) {
+        tableContent += "<tr><td>" + menuItems[i].name + "</td><td>$" + menuItems[i].price + "</td></tr>";
+      }
+      document.getElementById("funObj").innerHTML += tableContent;
+
+        </script>   
+    </main>
+  </body>
+</html>
