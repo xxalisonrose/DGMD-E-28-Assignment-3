@@ -80,48 +80,95 @@
             sauerkraut: 0
            };
 
-        // Add items to cart and make it uniform so all text is lower case
-        function addCartBtn() {
-       var lowerName = document.getElementById("txtItem").value.toLowerCase();
 
-          var itemName
+        // Remove white Spaces in String
+        function removeSpace(str) {
+            return str.replace(/\s+/g, '');
+        }
 
-    // Check if it is an item that can be ordered
-    if (cart.hasOwnProperty(itemName)) {
-        // add to cart
-        cart[itemName]++;
-        //update total
-        totalCart();
+        // Add items to cart and make it uniform so all text is lower case and remove spaces
+
+
+function addCartBtn() {
+    var inputItem = document.getElementById('txtItem').value.trim().toLowerCase();
+
+    if (inputItem !== '') {
+        var itemName = removeSpace(inputItem);
+
+        // Check if it is an item that can be ordered
+        if (cart.hasOwnProperty(itemName)) {
+          // add to cart
+            cart[itemName]++;
+            //update total
+            totalCart();
+        } else {
+            alert("Invalid Entry. Try Again.");
+        }
     } else {
-        alert("Invalid Entry. Try Again.");
+        alert("Please enter an item.");
     }
 }
+
 
 function totalCart() {
-    var shoppingCart = document.getElementById("shoppingCart");
+            var shoppingCart = document.getElementById("shoppingCart");
 
-    // Loop through the cart items
-    var cartContent = "";
-    for (var item in cart) {
-        if (cart[item] > 0) {
-            // Display item name and quantity
-            cartContent += "<p>" + item + ": " + cart[item] + "</p>";
+            // Loop through the cart items
+            var cartContent = "";
+            for (var item in cart) {
+                if (cart[item] > 0) {
+                    // Display item name and quantity
+                    cartContent += "<p>" + item + ": " + cart[item] + "</p>";
+                }
+            }
+
+            // Append the content to the shopping cart
+            shoppingCart.innerHTML = cartContent;
+        }
+
+
+        // Part 5
+        function checkoutBtn() {
+          var totalOrderCost = 0;
+
+          for (var item in cart) {
+              if (cart[item] > 0) {
+                  var itemCost = cart[item] * getMenuPrice(item);
+                  totalOrderCost += itemCost;
+              }
+          }
+
+          // Display popup
+          alert("Total Price: $" + totalOrderCost.toFixed(2));
+
+            // Clear cart and reset
+            clearCart();
+}
+
+function getMenuPrice(itemName) {
+    for (var i = 0; i < menuItems.length; i++) {
+        if (menuItems[i].name.toLowerCase() === itemName) {
+            return menuItems[i].price;
         }
     }
-
-    // Update the content of the shopping cart
-    shoppingCart.innerHTML = cartContent;
+    // Return 0 if not found
+    return 0;
 }
-      
-          function checkoutBtn() {
-            //checkout
+
+
+
+          function clearCart() {
+              for (var item in cart) {
+                  cart[item] = 0;
+              }
+              totalCart(); // Update display to show all quantities as 0
           }
 
 
 
 
-        
 
+  
         // Part 1.3
         // function object with this
         function MenuItem(name, price) {
@@ -141,7 +188,7 @@ function totalCart() {
       for (var i = 0; i < menuItems.length; i++) {
         tableContent += "<tr><td>" + menuItems[i].name + "</td><td>$" + menuItems[i].price + "</td></tr>";
       }
-      document.getElementById("funObj").innerHTML += tableContent;
+      document.getElementById("funObj").innerHTML = tableContent;
 
         </script>   
     </main>
