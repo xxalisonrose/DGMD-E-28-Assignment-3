@@ -83,21 +83,22 @@
 
         // Remove white Spaces in String
         function removeSpace(str) {
+            if (typeof str === 'string') {
             return str.replace(/\s+/g, '');
-        }
+        } else {
+          return 0;
+        }};
 
         // Add items to cart and make it uniform so all text is lower case and remove spaces
-
-
-function addCartBtn() {
+        function addCartBtn() {
     var inputItem = document.getElementById('txtItem').value.trim().toLowerCase();
-
+    
     if (inputItem !== '') {
         var itemName = removeSpace(inputItem);
 
         // Check if it is an item that can be ordered
         if (cart.hasOwnProperty(itemName)) {
-          // add to cart
+            // add to cart
             cart[itemName]++;
             //update total
             totalCart();
@@ -121,8 +122,7 @@ function totalCart() {
                     cartContent += "<p>" + item + ": " + cart[item] + "</p>";
                 }
             }
-
-            // Append the content to the shopping cart
+            // Add the content to the shopping cart
             shoppingCart.innerHTML = cartContent;
         }
 
@@ -130,31 +130,42 @@ function totalCart() {
         // Part 5
         function checkoutBtn() {
           var totalOrderCost = 0;
+          var itemsDetails = "";
 
           for (var item in cart) {
               if (cart[item] > 0) {
                   var itemCost = cart[item] * getMenuPrice(item);
                   totalOrderCost += itemCost;
+
+           // Add to to the string
+           // (2) for .00 places
+            itemsDetails += cart[item] + "x " + item + ": $" + itemCost.toFixed(2) + "\n";
               }
           }
 
+          var message = "Items:\n" + itemsDetails + "\nTotal Order Cost: $" + totalOrderCost.toFixed(2);
+
           // Display popup
-          alert("Total Price: $" + totalOrderCost.toFixed(2));
+          alert(message);
 
             // Clear cart and reset
             clearCart();
 }
 
 function getMenuPrice(itemName) {
-    for (var i = 0; i < menuItems.length; i++) {
-        if (menuItems[i].name.toLowerCase() === itemName) {
-            return menuItems[i].price;
+
+  if (menuItems !== '') {
+        var menuSpace = removeSpace(menuItems);
+
+    for (var i = 0; i < menuSpace.length; i++) {
+        console.log("Comparing:", menuSpace[i], "with:", itemName);
+        if (menuSpace[i].name.toLowerCase() === itemName) {
+            return menuSpace[i].price;
         }
     }
     // Return 0 if not found
     return 0;
-}
-
+}};
 
 
           function clearCart() {
@@ -163,11 +174,6 @@ function getMenuPrice(itemName) {
               }
               totalCart(); // Update display to show all quantities as 0
           }
-
-
-
-
-
   
         // Part 1.3
         // function object with this
@@ -176,12 +182,14 @@ function getMenuPrice(itemName) {
         this.price = price;
       }
 
-      var hotdog = new MenuItem("Hot Dog", 4);
+      var hotdog = new MenuItem("Hot Dog", 4.00);
       var fries = new MenuItem("Fries", 3.50);
       var soda = new MenuItem("Soda", 1.50);
-      var sauerkraut = new MenuItem("Sauerkraut", 1);
+      var sauerkraut = new MenuItem("Sauerkraut", 1.00);
 
       var menuItems = [hotdog, fries, soda, sauerkraut];
+
+      console.log(menuItems);
 
       // write to table
       var tableContent = "";
